@@ -24,7 +24,7 @@ class UserController extends Controller
     {
         $users = $this->user->get();
 
-        return response()->json(['users' => $users]);
+        return response()->json($users);
     }
 
     /**
@@ -43,7 +43,7 @@ class UserController extends Controller
         if(!$insert = $this->user->create($data))
             return response()->json(['error' => 'user not insert!', 500]);
             
-        return response()->json(['user' => $insert]);
+        return response()->json($data);
     }
 
     /**
@@ -56,7 +56,7 @@ class UserController extends Controller
     {
         if(! $user = $this->user->find($id))
             return response()->json(['error' => 'user not found'] , 404);
-        return response()->json(['user' => $user]);
+        return response()->json($user);
     }
 
     /**
@@ -80,7 +80,7 @@ class UserController extends Controller
         if(!$update = $user->update($data))
             return response()->json(['error' => 'failed to update user'], 500);
         
-        return response()->json(['update' => $update]);
+        return response()->json($data);
     }
 
     /**
@@ -108,6 +108,21 @@ class UserController extends Controller
                             ->orWhere('email','LIKE',"%{$data['key']}%")
                             ->get();
 
-        return response()->json(['result' => $users]);
+        return response()->json($users);
+    }
+
+    public function login(Request $request)
+    {
+        $data = $request->all();
+        $validate =validator($data, $this->user->rulesLogin());
+        if($validate->fails())
+            return response()->json(['validate' => $validate->messages()]);
+
+        $users = $this->user
+                            ->where('username',$data['username'])
+                            ->where('password',$data['password'])
+                            ->get();
+
+        return response()->json($users);
     }
 }

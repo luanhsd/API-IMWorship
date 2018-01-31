@@ -23,7 +23,7 @@ class MusicController extends Controller
     public function index()
     {
         $musics = $this->music->get();
-        return response()->json(['musics' , $musics]);
+        return response()->json($musics);
     }
 
     /**
@@ -42,7 +42,7 @@ class MusicController extends Controller
         if(!$insert = $this->music->create($data))
             return response()->json(['error' => 'music not insert!', 500]);
             
-        return response()->json(['music' => $insert]);
+        return response()->json($data);
     }
 
     /**
@@ -55,7 +55,7 @@ class MusicController extends Controller
     {
         if(! $music = $this->music->find($id))
             return response()->json(['error' => 'music not found'] , 404);
-        return response()->json(['music' => $music]);
+        return response()->json($music);
     }
 
     /**
@@ -79,7 +79,7 @@ class MusicController extends Controller
         if(!$update = $music->update($data))
             return response()->json(['error' => 'failed to update music'], 500);
         
-        return response()->json(['update' => $update]);
+        return response()->json($data);
     }
 
     /**
@@ -112,6 +112,6 @@ class MusicController extends Controller
                             ->orWhere('author','LIKE',"%{$data['key']}%")
                             ->get();
 
-        return response()->json(['result' => $musics]);
+        return response()->json($musics);
     }
 }

@@ -22,7 +22,7 @@ class ScheduleTeamController extends Controller
     public function index()
     {
         $scheduleTeams = $this->scheduleTeam->get();
-        return response()->json(['teams' => $scheduleTeams]);
+        return response()->json($scheduleTeams);
     }
 
     /**
@@ -41,7 +41,7 @@ class ScheduleTeamController extends Controller
         if(!$insert = $this->scheduleTeam->create($data))
             return response()->json(['error' => 'scheduleTeam not insert!', 500]);
             
-        return response()->json(['scheduleTeam' => $insert]);
+        return response()->json($data);
     }
 
     /**
@@ -54,7 +54,7 @@ class ScheduleTeamController extends Controller
     {
         if(! $scheduleTeam = $this->scheduleTeam->find($id))
             return response()->json(['error' => 'scheduleteam not found'] , 404);
-        return response()->json(['scheduleteam' => $scheduleTeam]);
+        return response()->json($scheduleTeam);
     }
 
     /**
@@ -78,7 +78,7 @@ class ScheduleTeamController extends Controller
         if(!$update = $scheduleTeam->update($data))
             return response()->json(['error' => 'failed to update scheduleTeam'], 500);
         
-        return response()->json(['update' => $update]);
+        return response()->json($data);
     }
 
     /**
@@ -113,6 +113,6 @@ class ScheduleTeamController extends Controller
                             ->where('schedule_id',$data['key'])
                             ->get();
 
-        return response()->json(['result' => $list]);
+        return response()->json($list);
     }
 }

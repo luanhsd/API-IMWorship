@@ -22,7 +22,7 @@ class ScheduleMusicController extends Controller
     public function index()
     {
         $scheduleMusics = $this->scheduleMusic->get();
-        return response()->json(['schedulemusics' => $scheduleMusics]);
+        return response()->json($scheduleMusics);
     }
 
     /**
@@ -41,7 +41,7 @@ class ScheduleMusicController extends Controller
         if(!$insert = $this->scheduleMusic->create($data))
             return response()->json(['error' => 'scheduleMusic not insert!', 500]);
             
-        return response()->json(['scheduleMusic' => $insert]);
+        return response()->json($data);
     }
 
     /**
@@ -54,7 +54,7 @@ class ScheduleMusicController extends Controller
     {
         if(! $scheduleMusic = $this->scheduleMusic->find($id))
             return response()->json(['error' => 'schedulemusic not found'] , 404);
-        return response()->json(['schedulemusic' => $scheduleMusic]);
+        return response()->json($scheduleMusic);
     }
 
     /**
@@ -78,7 +78,7 @@ class ScheduleMusicController extends Controller
         if(!$update = $scheduleMusic->update($data))
             return response()->json(['error' => 'failed to update scheduleMusic'], 500);
         
-        return response()->json(['update' => $update]);
+        return response()->json( $data);
     }
 
     /**
@@ -113,6 +113,6 @@ class ScheduleMusicController extends Controller
                             ->where('schedule_id',$data['key'])
                             ->get();
 
-        return response()->json(['result' => $list]);
+        return response()->json($list);
     }
 }

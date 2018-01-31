@@ -8,6 +8,10 @@ class Schedule extends Model
 {
     protected $fillable = ['date','event'];
 
+    protected $hidden = [
+        'created_at', 'updated_at',
+    ];
+
     public function rules($id = null)
     {
         return [
@@ -22,4 +26,6 @@ class Schedule extends Model
             'key'   =>  'required'
         ];
     }
+
+    
 }

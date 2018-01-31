@@ -22,7 +22,7 @@ class ScheduleController extends Controller
     public function index()
     {
         $schedules = $this->schedule->all();
-        return response()->json(['schedules' => $schedules]);
+        return response()->json($schedules);
     }
 
     /**
@@ -41,7 +41,7 @@ class ScheduleController extends Controller
         if(!$insert = $this->schedule->create($data))
             return response()->json(['error' => 'schedule not insert!', 500]);
             
-        return response()->json(['schedule' => $insert]);
+        return response()->json($data);
     }
 
     /**
@@ -54,7 +54,7 @@ class ScheduleController extends Controller
     {
         if(! $schedule = $this->schedule->find($id))
             return response()->json(['error' => 'schedule not found'] , 404);
-        return response()->json(['schedule' => $schedule]);
+        return response()->json($schedule);
     }
 
     /**
@@ -78,7 +78,7 @@ class ScheduleController extends Controller
         if(!$update = $schedule->update($data))
             return response()->json(['error' => 'failed to update schedule'], 500);
         
-        return response()->json(['update' => $update]);
+        return response()->json($data);
     }
 
     /**
@@ -111,6 +111,6 @@ class ScheduleController extends Controller
                             ->orWhere('event','LIKE',"%{$data['key']}%")
                             ->get();
 
-        return response()->json(['result' => $schedule]);
+        return response()->json($schedule);
     }
 }
