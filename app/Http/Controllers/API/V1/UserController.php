@@ -121,7 +121,7 @@ class UserController extends Controller
         $users = $this->user
                             ->where('username',$data['username'])
                             ->where('password',$data['password'])
-                            ->get();
+                            ->first();
 
         return response()->json($users);
     }
